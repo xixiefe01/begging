@@ -462,14 +462,16 @@
   }
 
   function callTextAPI(want,script,style,onOk,onErr){
-    var key=getKey();if(!key){onErr("NO_KEY");return}
+    var key=getKey();
     var base=getBase().replace(/\/+$/,"");
     var sysPrompt=buildSystemPrompt(style);
     var userMsg="想要的东西:"+want+"\n剧本风格:"+script+"\n说话风格:"+style+"\n\n请生成戏精讨饭文案。只输出正文,不要引号或标题。";
     var body={model:getModel(),messages:[{role:"system",content:sysPrompt},{role:"user",content:userMsg}],temperature:1.15,max_tokens:400,stream:false};
+    var headers={"Content-Type":"application/json"};
+    if(key){headers["Authorization"]="Bearer "+key}
     var controller=new AbortController();
     var timer=setTimeout(function(){controller.abort()},30000);
-    fetch(base+"/chat/completions",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},body:JSON.stringify(body),signal:controller.signal})
+    fetch(base+"/chat/completions",{method:"POST",headers:headers,body:JSON.stringify(body),signal:controller.signal})
       .then(function(res){if(!res.ok){return res.text().then(function(t){throw new Error("HTTP "+res.status)})}return res.json()})
       .then(function(data){
         var text=(data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||"";
@@ -497,13 +499,15 @@
   };
 
   function callImageAPI(script,onOk,onErr){
-    var key=getKey();if(!key){onErr("NO_KEY");return}
+    var key=getKey();
     var base=getBase().replace(/\/+$/,"");
     var prompt=STYLE_IMAGE_PROMPTS[script]||"A dramatic meme-style illustration, colorful, funny, Chinese internet culture";
     var body={model:"agnes-image-2.1-flash",prompt:prompt,size:"1024x576",n:1};
+    var headers={"Content-Type":"application/json"};
+    if(key){headers["Authorization"]="Bearer "+key}
     var controller=new AbortController();
     var timer=setTimeout(function(){controller.abort()},120000);
-    fetch(base+"/images/generations",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},body:JSON.stringify(body),signal:controller.signal})
+    fetch(base+"/images/generations",{method:"POST",headers:headers,body:JSON.stringify(body),signal:controller.signal})
       .then(function(res){if(!res.ok){return res.text().then(function(t){throw new Error("IMG_HTTP "+res.status)})}return res.json()})
       .then(function(data){
         var url="";
@@ -526,7 +530,6 @@
   genBtn.onclick=function(){
     var want=$("wantInput").value.trim();
     if(!want){toast("总得说想吃啥吧老板 🥺");$("wantInput").focus();return}
-    if(!getKey()){toast("没检测到 Key,请打开 env.js 填好 AGNES_API_KEY 后刷新页面");return}
 
     var script=getSelectedScript();
     var style=getSelectedStyle();
@@ -582,7 +585,7 @@
     function onTextErr(e){
       if(finished)return;textDone=true;imgDone=true;finished=true;
       stopLoadingTips();loading.classList.remove("show");genBtn.disabled=false;
-      if(e==="NO_KEY"){toast("没检测到 Key");}
+      if(e==="NO_KEY"){toast("没检测到 Key,请在 Cloudflare 环境变量或 env.js 中配置");}
       else if(e==="TIMEOUT"){toast("戏精大脑超载中,请稍后再试 ⏳")}
       else{toast("戏精大脑超载中,请稍后再试 🤯")}
     }
