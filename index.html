@@ -7,209 +7,184 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet" />
-<script src="env.js?v=4"></script>
+<script src="env.js?v=5"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
   :root{
-    --yellow:#FFE600;
-    --pink:#FF3D9A;
-    --orange:#FF6B35;
-    --blue:#2D5BFF;
-    --green:#00E676;
-    --ink:#0A0A0A;
-    --cream:#FFFDF5;
-    --shadow:6px 6px 0 var(--ink);
+    --yellow:#FFE600;--pink:#FF3D9A;--orange:#FF6B35;--blue:#2D5BFF;
+    --green:#00E676;--ink:#0A0A0A;--cream:#FFFDF5;
+    --shadow:5px 5px 0 var(--ink);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0}
   body{
     font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
-    color:var(--ink);
-    background:var(--yellow);
+    color:var(--ink);background:var(--yellow);
     background-image:
-      radial-gradient(circle at 12% 18%, rgba(255,61,154,.35) 0, transparent 38%),
-      radial-gradient(circle at 88% 12%, rgba(45,91,255,.30) 0, transparent 36%),
-      radial-gradient(circle at 78% 82%, rgba(0,230,118,.32) 0, transparent 40%),
-      radial-gradient(circle at 18% 88%, rgba(255,107,53,.32) 0, transparent 40%);
-    min-height:100vh;
-    overflow-x:hidden;
-    position:relative;
+      radial-gradient(circle at 12% 18%,rgba(255,61,154,.35) 0,transparent 38%),
+      radial-gradient(circle at 88% 12%,rgba(45,91,255,.30) 0,transparent 36%),
+      radial-gradient(circle at 78% 82%,rgba(0,230,118,.32) 0,transparent 40%),
+      radial-gradient(circle at 18% 88%,rgba(255,107,53,.32) 0,transparent 40%);
+    min-height:100vh;overflow-x:hidden;position:relative;
   }
-  /* 噪点纹理覆盖层 */
   body::before{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     opacity:.6;mix-blend-mode:multiply;
   }
-  .wrap{position:relative;z-index:2;max-width:680px;margin:0 auto;padding:22px 18px 80px}
+  .wrap{position:relative;z-index:2;max-width:700px;margin:0 auto;padding:22px 18px 80px}
 
-  /* 顶部标题 */
-  .topbar{display:flex;justify-content:flex-end;gap:8px;margin-bottom:6px}
-  .icon-btn{
-    width:42px;height:42px;border-radius:50%;border:3px solid var(--ink);
-    background:var(--cream);box-shadow:3px 3px 0 var(--ink);cursor:pointer;
-    font-size:18px;display:grid;place-items:center;transition:transform .12s;
-  }
-  .icon-btn:hover{transform:rotate(-8deg) scale(1.05)}
-  .icon-btn:active{transform:translate(2px,2px)}
-
-  .hero{text-align:center;margin:6px 0 18px;position:relative}
-  .sticker{
-    position:absolute;display:inline-block;background:var(--pink);color:#fff;
-    font-family:"ZCOOL KuaiLe",cursive;padding:4px 12px;border:3px solid var(--ink);
-    box-shadow:3px 3px 0 var(--ink);transform:rotate(-8deg);font-size:14px;
-  }
-  .sticker.s1{top:-6px;left:8px;background:var(--pink)}
-  .sticker.s2{top:14px;right:6px;background:var(--blue);transform:rotate(7deg)}
+  /* Hero */
+  .hero{text-align:center;margin:6px 0 20px;position:relative}
   .hero h1{
     font-family:"ZCOOL QingKe HuangYou",cursive;
-    font-size:clamp(38px,11vw,68px);line-height:1;margin:0;
-    color:var(--ink);
-    text-shadow:5px 5px 0 var(--pink),10px 10px 0 var(--blue);
-    letter-spacing:2px;
+    font-size:clamp(36px,10vw,60px);line-height:1;margin:0;color:var(--ink);
+    text-shadow:4px 4px 0 var(--pink),8px 8px 0 var(--blue);letter-spacing:2px;
   }
   .hero .sub{
-    font-family:"Ma Shan Zheng",cursive;font-size:clamp(18px,5vw,26px);
-    margin-top:14px;color:var(--ink);background:var(--green);
-    display:inline-block;padding:3px 16px;border:3px solid var(--ink);
-    box-shadow:var(--shadow);transform:rotate(-2deg);
+    font-family:"Ma Shan Zheng",cursive;font-size:clamp(16px,4vw,22px);
+    margin-top:10px;color:var(--ink);background:var(--green);
+    display:inline-block;padding:3px 14px;border:3px solid var(--ink);
+    box-shadow:3px 3px 0 var(--ink);transform:rotate(-2deg);
   }
 
-  /* 卡片通用 */
+  /* Cards */
   .card{
     background:var(--cream);border:4px solid var(--ink);border-radius:18px;
-    box-shadow:var(--shadow);padding:20px;margin-bottom:22px;position:relative;
+    box-shadow:var(--shadow);padding:20px;margin-bottom:22px;
   }
   .card h2{
-    font-family:"ZCOOL KuaiLe",cursive;font-size:22px;margin:0 0 14px;
+    font-family:"ZCOOL KuaiLe",cursive;font-size:20px;margin:0 0 12px;
     display:flex;align-items:center;gap:8px;
   }
-  .tag{
-    display:inline-block;background:var(--orange);color:#fff;font-size:12px;
-    padding:2px 8px;border:2px solid var(--ink);border-radius:30px;
-    font-family:"ZCOOL KuaiLe",cursive;transform:rotate(-3deg);
-  }
 
-  /* 输入框 */
-  .field-label{font-weight:800;margin-bottom:8px;display:block;font-size:15px}
+  /* Input */
   .input-wrap{position:relative}
   input[type=text]{
-    width:100%;padding:14px 16px;font-size:17px;border:3px solid var(--ink);
+    width:100%;padding:13px 15px;font-size:16px;border:3px solid var(--ink);
     border-radius:12px;background:#fff;font-family:inherit;color:var(--ink);
-    box-shadow:4px 4px 0 var(--ink);outline:none;transition:transform .1s;
+    box-shadow:3px 3px 0 var(--ink);outline:none;transition:transform .1s;
   }
-  input[type=text]:focus{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--pink)}
+  input[type=text]:focus{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--pink)}
   .hint{font-size:12px;color:#666;margin-top:6px}
+  .hint b{color:var(--pink)}
 
-  /* 剧本选择 */
-  .scripts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  /* Style pills */
+  .styles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .style-pill{
+    cursor:pointer;border:3px solid var(--ink);border-radius:30px;padding:7px 16px;
+    background:#fff;font-family:"ZCOOL KuaiLe",cursive;font-size:14px;
+    box-shadow:2px 2px 0 var(--ink);transition:all .12s;user-select:none;
+  }
+  .style-pill:hover{transform:translate(-1px,-1px)}
+  .style-pill.selected{background:var(--pink);color:#fff;transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+
+  /* Script grid */
+  .scripts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .script-opt{
-    cursor:pointer;border:3px solid var(--ink);border-radius:14px;padding:12px 10px;
-    background:#fff;box-shadow:3px 3px 0 var(--ink);transition:all .12s;
-    position:relative;font-family:"ZCOOL KuaiLe",cursive;
+    cursor:pointer;border:3px solid var(--ink);border-radius:12px;padding:10px 8px;
+    background:#fff;box-shadow:2px 2px 0 var(--ink);transition:all .12s;
+    position:relative;font-family:"ZCOOL KuaiLe",cursive;text-align:center;
   }
-  .script-opt:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+  .script-opt:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
   .script-opt input{position:absolute;opacity:0;pointer-events:none}
-  .script-opt .emoji{font-size:26px;display:block;line-height:1}
-  .script-opt .name{font-size:15px;margin-top:6px;display:block}
-  .script-opt .desc{font-size:11px;color:#777;font-family:"PingFang SC",sans-serif;margin-top:2px;display:block}
-  .script-opt.selected{background:var(--yellow);transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--pink)}
+  .script-opt .emoji{font-size:22px;display:block;line-height:1}
+  .script-opt .name{font-size:13px;margin-top:4px;display:block}
+  .script-opt .desc{font-size:10px;color:#777;font-family:"PingFang SC",sans-serif;margin-top:1px;display:block}
+  .script-opt.selected{background:var(--yellow);transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--pink)}
   .script-opt.selected::after{
-    content:"✓";position:absolute;top:-10px;right:-10px;width:26px;height:26px;
-    background:var(--green);border:3px solid var(--ink);border-radius:50%;
-    display:grid;place-items:center;font-size:14px;color:var(--ink);font-weight:900;
+    content:"✓";position:absolute;top:-8px;right:-8px;width:22px;height:22px;
+    background:var(--green);border:2px solid var(--ink);border-radius:50%;
+    display:grid;place-items:center;font-size:12px;color:var(--ink);font-weight:900;
   }
 
-  /* 大按钮 */
+  /* Custom stamp input */
+  .stamp-input-row{display:flex;gap:10px;align-items:center;margin-bottom:18px}
+  .stamp-input-row input{flex:1}
+  .stamp-input-row .char-count{font-size:11px;color:#999;font-family:"PingFang SC",sans-serif;white-space:nowrap}
+
+  /* Big button */
   .big-btn{
-    width:100%;margin-top:22px;padding:18px;font-size:22px;
+    width:100%;margin-top:18px;padding:16px;font-size:20px;
     font-family:"ZCOOL KuaiLe",cursive;letter-spacing:2px;
-    background:var(--pink);color:#fff;border:4px solid var(--ink);border-radius:16px;
-    box-shadow:var(--shadow);cursor:pointer;transition:transform .1s;position:relative;
+    background:var(--pink);color:#fff;border:4px solid var(--ink);border-radius:14px;
+    box-shadow:var(--shadow);cursor:pointer;transition:transform .1s;
   }
-  .big-btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+  .big-btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
   .big-btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
-  .big-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .big-btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
 
-  /* 加载状态 */
+  /* Loading */
   .loading{display:none;text-align:center;padding:30px 10px}
   .loading.show{display:block}
   .loader{
-    width:60px;height:60px;margin:0 auto 16px;border:5px solid var(--ink);
+    width:56px;height:56px;margin:0 auto 14px;border:5px solid var(--ink);
     border-top-color:var(--pink);border-radius:50%;animation:spin .8s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
   .loading-text{
-    font-family:"ZCOOL KuaiLe",cursive;font-size:18px;
+    font-family:"ZCOOL KuaiLe",cursive;font-size:16px;
     background:var(--yellow);display:inline-block;padding:4px 14px;
-    border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transform:rotate(-2deg);
+    border:3px solid var(--ink);box-shadow:2px 2px 0 var(--ink);
   }
   .loading-dots::after{content:"";animation:dots 1.4s steps(4,end) infinite}
   @keyframes dots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}100%{content:""}}
 
-  /* 结果卡片 */
+  /* Result */
   .result{display:none;margin-top:10px}
   .result.show{display:block;animation:popIn .4s cubic-bezier(.2,1.4,.4,1)}
-  @keyframes popIn{0%{transform:scale(.7) rotate(-3deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+  @keyframes popIn{0%{transform:scale(.7) rotate(-2deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
   .result-card{
     background:linear-gradient(135deg,#fff 0%,var(--cream) 100%);
-    border:4px solid var(--ink);border-radius:20px;box-shadow:8px 8px 0 var(--blue);
-    padding:22px;position:relative;overflow:hidden;
+    border:4px solid var(--ink);border-radius:20px;box-shadow:7px 7px 0 var(--blue);
+    padding:0;position:relative;overflow:hidden;
   }
-  .result-card::before{
-    content:"";position:absolute;top:0;left:0;right:0;height:34px;
-    background:repeating-linear-gradient(45deg,var(--pink) 0 12px,#fff 12px 24px);
-    border-bottom:3px solid var(--ink);
+  .result-hero{
+    width:100%;aspect-ratio:16/9;overflow:hidden;background:#eee;
+    border-bottom:3px solid var(--ink);position:relative;
   }
-  .result-card .stamp{
-    position:absolute;top:8px;right:10px;background:var(--orange);color:#fff;
-    font-family:"ZCOOL KuaiLe",cursive;font-size:12px;padding:3px 10px;
-    border:2px solid var(--ink);transform:rotate(8deg);z-index:2;
+  .result-hero img{width:100%;height:100%;object-fit:cover}
+  .result-hero .img-loading{
+    position:absolute;inset:0;display:grid;place-items:center;
+    font-family:"ZCOOL KuaiLe",cursive;color:#999;font-size:14px;
   }
-  .result-body{
-    margin-top:40px;font-size:16px;line-height:1.85;white-space:pre-wrap;
-    min-height:80px;font-family:"PingFang SC",sans-serif;
+  .result-hero .img-placeholder{
+    position:absolute;inset:0;display:grid;place-items:center;
+    background:repeating-linear-gradient(45deg,#f0f0f0 0 10px,#e8e8e8 10px 20px);
+    font-family:"ZCOOL KuaiLe",cursive;color:#bbb;font-size:14px;
   }
+  .result-stamp{
+    position:absolute;top:10px;right:10px;background:var(--orange);color:#fff;
+    font-family:"ZCOOL KuaiLe",cursive;font-size:13px;padding:4px 12px;
+    border:3px solid var(--ink);transform:rotate(6deg);z-index:3;
+    box-shadow:2px 2px 0 var(--ink);
+  }
+  .result-body{padding:20px 22px 0;font-size:16px;line-height:1.85;white-space:pre-wrap;min-height:60px}
   .cursor{display:inline-block;width:2px;background:var(--ink);animation:blink 1s steps(2) infinite;margin-left:1px;vertical-align:middle;height:18px}
   @keyframes blink{50%{opacity:0}}
 
-  /* 搞怪印章区 */
+  /* Stamp section */
   .stamp-row{
-    margin-top:22px;padding-top:20px;border-top:3px dashed var(--ink);
-    display:flex;align-items:center;gap:18px;justify-content:center;flex-wrap:wrap;
+    margin-top:18px;padding:18px 22px 0;border-top:3px dashed var(--ink);
+    display:flex;align-items:center;gap:16px;justify-content:center;flex-wrap:wrap;
   }
-  /* 红色圆形公章风格印章 */
   .seal{
-    position:relative;width:118px;height:118px;border-radius:50%;
+    position:relative;width:110px;height:110px;border-radius:50%;
     border:4px solid #D81E06;color:#D81E06;background:rgba(216,30,6,.06);
     display:grid;place-items:center;text-align:center;flex-shrink:0;
-    transform:rotate(-14deg);
-    box-shadow:0 0 0 3px rgba(216,30,6,.15);
+    transform:rotate(-14deg);box-shadow:0 0 0 3px rgba(216,30,6,.15);
   }
-  .seal::before{
-    /* 印章内圈虚线 */
-    content:"";position:absolute;inset:8px;border:2px dashed #D81E06;border-radius:50%;
-    opacity:.7;
-  }
-  .seal-line{
-    font-family:"Ma Shan Zheng","ZCOOL KuaiLe",cursive;font-size:22px;font-weight:900;
-    line-height:1.1;letter-spacing:2px;display:block;
-  }
-  .seal-star{
-    position:absolute;top:8px;font-size:16px;color:#D81E06;line-height:1;
-  }
+  .seal::before{content:"";position:absolute;inset:7px;border:2px dashed #D81E06;border-radius:50%;opacity:.7}
+  .seal-line{font-family:"Ma Shan Zheng","ZCOOL KuaiLe",cursive;font-size:20px;font-weight:900;line-height:1.15;letter-spacing:1px;display:block;padding:0 6px}
   .seal-meta{text-align:left;font-family:"ZCOOL KuaiLe",cursive}
-  .seal-title{font-size:18px;color:var(--ink)}
+  .seal-title{font-size:17px;color:var(--ink)}
   .seal-no{font-size:12px;color:#666;font-family:"PingFang SC",sans-serif;margin-top:3px}
   .seal-note{font-size:13px;color:#D81E06;margin-top:5px}
-  @media (max-width:520px){
-    .seal{width:100px;height:100px;transform:rotate(-10deg)}
-    .seal-line{font-size:18px}
-  }
 
-  .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+  /* Actions */
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 22px 22px}
   .act-btn{
-    padding:13px;font-size:15px;font-family:"ZCOOL KuaiLe",cursive;
+    padding:12px;font-size:14px;font-family:"ZCOOL KuaiLe",cursive;
     border:3px solid var(--ink);border-radius:12px;cursor:pointer;transition:transform .1s;
     box-shadow:3px 3px 0 var(--ink);
   }
@@ -222,118 +197,121 @@
   .toast{
     position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(100px);
     background:var(--ink);color:var(--yellow);padding:12px 22px;border-radius:30px;
-    font-family:"ZCOOL KuaiLe",cursive;font-size:16px;z-index:9999;
+    font-family:"ZCOOL KuaiLe",cursive;font-size:15px;z-index:9999;
     border:3px solid var(--yellow);box-shadow:4px 4px 0 var(--pink);
     transition:transform .3s cubic-bezier(.2,1.4,.4,1);pointer-events:none;
   }
   .toast.show{transform:translateX(-50%) translateY(0)}
 
-  /* 弹窗 */
-  .modal-mask{
-    position:fixed;inset:0;background:rgba(10,10,10,.55);z-index:1000;
-    display:none;place-items:center;padding:20px;
-  }
-  .modal-mask.show{display:grid}
-  .modal{
-    background:var(--cream);border:4px solid var(--ink);border-radius:18px;
-    box-shadow:8px 8px 0 var(--pink);padding:22px;max-width:420px;width:100%;
-    animation:popIn .3s;
-  }
-  .modal h3{font-family:"ZCOOL KuaiLe",cursive;margin:0 0 14px;font-size:22px}
-  .modal label{font-size:13px;font-weight:700;display:block;margin-bottom:6px}
-  .modal input{width:100%;padding:12px;border:3px solid var(--ink);border-radius:10px;font-size:15px;font-family:inherit;box-shadow:3px 3px 0 var(--ink);outline:none}
-  .modal .row{display:flex;gap:10px;margin-top:16px}
-  .modal button{flex:1;padding:12px;border:3px solid var(--ink);border-radius:10px;font-family:"ZCOOL KuaiLe",cursive;font-size:16px;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
-  .modal .ok{background:var(--green)}
-  .modal .cancel{background:#fff}
-  .modal .note{font-size:12px;color:#666;margin-top:10px;line-height:1.5}
-  .modal a{color:var(--blue)}
-
-  /* 浮动装饰 */
-  .float{position:fixed;font-size:30px;z-index:0;pointer-events:none;opacity:.5;animation:floaty 6s ease-in-out infinite}
-  @keyframes floaty{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-18px) rotate(8deg)}}
-
   @media (max-width:520px){
-    .wrap{padding:16px 14px 70px}
+    .wrap{padding:14px 12px 70px}
     .card{padding:16px}
-    .scripts{grid-template-columns:1fr 1fr}
-    .result-body{font-size:15px}
-    .actions{grid-template-columns:1fr}
-    .hero h1{text-shadow:4px 4px 0 var(--pink),8px 8px 0 var(--blue)}
+    .scripts{grid-template-columns:1fr 1fr;gap:6px}
+    .script-opt{padding:8px 6px}
+    .script-opt .emoji{font-size:18px}
+    .script-opt .name{font-size:12px}
+    .script-opt .desc{font-size:9px}
+    .seal{width:92px;height:92px}
+    .seal-line{font-size:17px}
+    .result-body{font-size:14px;padding:16px 16px 0}
+    .actions{grid-template-columns:1fr;padding:0 16px 18px}
+    .stamp-row{padding:14px 16px 0}
+    .seal-meta{font-size:13px}
   }
 </style>
 </head>
 <body>
-  <div class="float" style="top:18%;left:4%;animation-delay:0s">🍗</div>
-  <div class="float" style="top:62%;right:5%;animation-delay:1.5s">💰</div>
-  <div class="float" style="top:80%;left:8%;animation-delay:3s">😭</div>
-
   <div class="wrap">
     <div class="hero">
-      <span class="sticker s1">V50</span>
-      <span class="sticker s2">急急急</span>
       <h1>戏精讨饭大王</h1>
       <div class="sub">疯狂星期四 · 特供版</div>
     </div>
 
     <!-- 输入区 -->
     <div class="card">
-      <h2>📝 想吃啥?说来听听 <span class="tag">必填</span></h2>
+      <h2>📝 你想要啥?说来听听</h2>
       <div class="input-wrap">
-        <input type="text" id="wantInput" placeholder="KFC疯狂星期四 / 一杯霸王茶姬" maxlength="40" />
+        <input type="text" id="wantInput" placeholder="KFC疯狂星期四 / 一杯霸王茶姬 / Switch" maxlength="40" />
       </div>
-      <div class="hint">💡 输入越具体,剧情越离谱。也支持"想要 Switch""想要 50 块"等。</div>
+      <div class="hint">💡 越具体剧情越离谱。支持食物/物品/现金。</div>
 
-      <h2 style="margin-top:20px">🎭 选个狗血剧本</h2>
+      <h2 style="margin-top:18px">🎤 说话风格</h2>
+      <div class="styles" id="styles">
+        <span class="style-pill selected" data-style="无厘头">🤪 无厘头</span>
+        <span class="style-pill" data-style="毒舌">🔥 毒舌</span>
+        <span class="style-pill" data-style="冷幽默">🥶 冷幽默</span>
+        <span class="style-pill" data-style="沙雕">🤣 沙雕</span>
+        <span class="style-pill" data-style="煽情">😭 煽情</span>
+      </div>
+
+      <h2>🎭 选个狗血剧本</h2>
       <div class="scripts" id="scripts">
         <label class="script-opt selected" data-key="豪门弃少">
           <input type="radio" name="script" value="豪门弃少" checked />
-          <span class="emoji">🎭</span>
-          <span class="name">豪门弃少</span>
+          <span class="emoji">🎭</span><span class="name">豪门弃少</span>
           <span class="desc">我真名叫龙傲天</span>
         </label>
         <label class="script-opt" data-key="仙侠渡劫">
           <input type="radio" name="script" value="仙侠渡劫" />
-          <span class="emoji">⚔️</span>
-          <span class="name">仙侠渡劫</span>
+          <span class="emoji">⚔️</span><span class="name">仙侠渡劫</span>
           <span class="desc">本座即将走火入魔</span>
         </label>
         <label class="script-opt" data-key="赛博朋克">
           <input type="radio" name="script" value="赛博朋克" />
-          <span class="emoji">🤖</span>
-          <span class="name">赛博朋克</span>
+          <span class="emoji">🤖</span><span class="name">赛博朋克</span>
           <span class="desc">义体已断电</span>
         </label>
         <label class="script-opt" data-key="霸道总裁">
           <input type="radio" name="script" value="霸道总裁" />
-          <span class="emoji">💔</span>
-          <span class="name">霸道总裁</span>
+          <span class="emoji">💔</span><span class="name">霸道总裁</span>
           <span class="desc">女人你成功引起我注意</span>
         </label>
         <label class="script-opt" data-key="末日废土">
           <input type="radio" name="script" value="末日废土" />
-          <span class="emoji">🧟</span>
-          <span class="name">末日废土</span>
+          <span class="emoji">🧟</span><span class="name">末日废土</span>
           <span class="desc">丧尸围城第七天</span>
         </label>
         <label class="script-opt" data-key="宫斗剧">
           <input type="radio" name="script" value="宫斗剧" />
-          <span class="emoji">👑</span>
-          <span class="name">宫斗剧</span>
+          <span class="emoji">👑</span><span class="name">宫斗剧</span>
           <span class="desc">臣妾做不到啊</span>
         </label>
         <label class="script-opt" data-key="校园青春">
           <input type="radio" name="script" value="校园青春" />
-          <span class="emoji">📚</span>
-          <span class="name">校园青春</span>
+          <span class="emoji">📚</span><span class="name">校园青春</span>
           <span class="desc">学渣的最后通牒</span>
         </label>
         <label class="script-opt" data-key="武侠江湖">
           <input type="radio" name="script" value="武侠江湖" />
-          <span class="emoji">🥷</span>
-          <span class="name">武侠江湖</span>
+          <span class="emoji">🥷</span><span class="name">武侠江湖</span>
           <span class="desc">在下丐帮八袋弟子</span>
         </label>
+        <label class="script-opt" data-key="直播翻车">
+          <input type="radio" name="script" value="直播翻车" />
+          <span class="emoji">📱</span><span class="name">直播翻车</span>
+          <span class="desc">家人们谁懂啊</span>
+        </label>
+        <label class="script-opt" data-key="网红被网暴">
+          <input type="radio" name="script" value="网红被网暴" />
+          <span class="emoji">💅</span><span class="name">网红被网暴</span>
+          <span class="desc">粉丝塌房现场</span>
+        </label>
+        <label class="script-opt" data-key="相亲修罗场">
+          <input type="radio" name="script" value="相亲修罗场" />
+          <span class="emoji">💒</span><span class="name">相亲修罗场</span>
+          <span class="desc">彩礼谈崩现场</span>
+        </label>
+        <label class="script-opt" data-key="职场PUA">
+          <input type="radio" name="script" value="职场PUA" />
+          <span class="emoji">💼</span><span class="name">职场PUA</span>
+          <span class="desc">老板你画的饼太大了</span>
+        </label>
+      </div>
+
+      <h2 style="margin-top:18px">🔖 印章刻字(可选)</h2>
+      <div class="stamp-input-row">
+        <input type="text" id="stampInput" placeholder="V我50 / 老板大气 / 铁公鸡拔毛..." maxlength="8" value="V我50" />
+        <span class="char-count" id="stampCount">4/8</span>
       </div>
 
       <button class="big-btn" id="genBtn">✨ 一键生成戏精讨饭文案</button>
@@ -348,16 +326,18 @@
     <!-- 结果区 -->
     <div class="result" id="result">
       <div class="result-card" id="resultCard">
-        <div class="stamp">讨 饭 专 用</div>
+        <div class="result-hero" id="resultHero">
+          <div class="img-placeholder">🎨 正在生成搞怪配图...</div>
+        </div>
+        <div class="result-stamp" id="resultStamp">讨 饭 专 用</div>
         <div class="result-body" id="resultBody"></div>
         <div class="stamp-row">
           <div class="seal" id="seal">
-            <span class="seal-line">V我50</span>
-            <span class="seal-line">官方认证</span>
-            <span class="seal-star">★</span>
+            <span class="seal-line" id="sealLine1">V我50</span>
+            <span class="seal-line" id="sealLine2">官方认证</span>
           </div>
           <div class="seal-meta">
-            <div class="seal-title">官方讨饭凭证</div>
+            <div class="seal-title" id="sealTitle">官方讨饭凭证</div>
             <div class="seal-no" id="sealNo">编号:V50-000000</div>
             <div class="seal-note">立字为据 · 概不赊账</div>
           </div>
@@ -370,31 +350,32 @@
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
 <script>
 (function(){
   "use strict";
-  var $ = function(id){return document.getElementById(id)};
+  var $=function(id){return document.getElementById(id)};
 
-  /* ---------- Agnes API 配置读取 ----------
-     唯一来源是 env.js 注入的 window.__ENV__。
-     所有请求走本地代理 /v1(serve.py 转发到 Agnes),避免浏览器 CORS。
-  ---------------------------------------------------------------- */
+  /* ---------- 配置读取 ---------- */
   var DEFAULT_BASE="/v1";
   var DEFAULT_MODEL="agnes-2.0-flash";
-  // 唯一来源:env.js。不再读 localStorage,避免旧的完整域名残留导致 CORS。
-  // 启动时清掉历史遗留的旧值,防止污染。
   try{localStorage.removeItem("agnes_api_key");localStorage.removeItem("agnes_base_url")}catch(e){}
-  function getBase(){
-    return (window.__ENV__&&window.__ENV__.AGNES_API_BASE_URL) || DEFAULT_BASE;
-  }
-  function getKey(){
-    return (window.__ENV__&&window.__ENV__.AGNES_API_KEY) || "";
-  }
-  function getModel(){
-    return (window.__ENV__&&window.__ENV__.AGNES_MODEL) || DEFAULT_MODEL;
+  function getBase(){return (window.__ENV__&&window.__ENV__.AGNES_API_BASE_URL)||DEFAULT_BASE}
+  function getKey(){return (window.__ENV__&&window.__ENV__.AGNES_API_KEY)||""}
+  function getModel(){return (window.__ENV__&&window.__ENV__.AGNES_MODEL)||DEFAULT_MODEL}
+
+  /* ---------- 风格选择 ---------- */
+  var stylesEl=$("styles");
+  stylesEl.addEventListener("click",function(e){
+    var p=e.target.closest(".style-pill");
+    if(!p)return;
+    Array.prototype.forEach.call(stylesEl.querySelectorAll(".style-pill"),function(el){el.classList.remove("selected")});
+    p.classList.add("selected");
+  });
+  function getSelectedStyle(){
+    var s=stylesEl.querySelector(".style-pill.selected");
+    return s?s.dataset.style:"无厘头";
   }
 
   /* ---------- 剧本选择 ---------- */
@@ -405,18 +386,29 @@
       el.classList.toggle("selected",el.querySelector("input").checked);
     });
   });
-  // 点击 label 整块也可触发(移动端更友好)
   scriptsEl.addEventListener("click",function(e){
     var opt=e.target.closest(".script-opt");
     if(!opt)return;
     var inp=opt.querySelector("input");
     if(!inp.checked){inp.checked=true;inp.dispatchEvent(new Event("change",{bubbles:true}))}
   });
-
   function getSelectedScript(){
     var sel=scriptsEl.querySelector("input[name=script]:checked");
     return sel?sel.value:"豪门弃少";
   }
+
+  /* ---------- 印章输入 ---------- */
+  var stampInput=$("stampInput"),stampCount=$("stampCount");
+  stampInput.addEventListener("input",function(){
+    var v=stampInput.value;
+    stampCount.textContent=v.length+"/8";
+    // 实时更新卡片上的印章文字预览
+    if(v.length>0){
+      var parts=v.length<=4?[v]:[v.slice(0,Math.ceil(v.length/2)),v.slice(Math.ceil(v.length/2))];
+      $("sealLine1").textContent=parts[0]||"V我50";
+      $("sealLine2").textContent=parts[1]||"官方认证";
+    }
+  });
 
   /* ---------- Toast ---------- */
   var toastTimer;
@@ -426,212 +418,193 @@
     toastTimer=setTimeout(function(){t.classList.remove("show")},2200);
   }
 
-  /* ---------- 搞笑加载提示轮播 ---------- */
+  /* ---------- 加载提示 ---------- */
   var loadingTips=[
-    "正在编造狗血剧情",
-    "导演正临时加戏",
-    "龙傲天正在收拾烂摊子",
-    "本座正在压制冷汗",
-    "义体电池快撑不住了",
-    "总裁正在甩支票",
-    "剧情正在强行反转",
-    "正在计算该要 50 还是 51"
+    "正在编造狗血剧情","导演正临时加戏","龙傲天正在收拾烂摊子",
+    "本座正在压制冷汗","义体电池快撑不住了","总裁正在甩支票",
+    "剧情正在强行反转","正在计算该要 50 还是 51","美工正在画配图",
+    "摄影师就位","五毛特效上线"
   ];
   var tipTimer;
   function startLoadingTips(){
-    var i=0;
-    $("loadingText").textContent=loadingTips[0];
-    tipTimer=setInterval(function(){
-      i=(i+1)%loadingTips.length;
-      $("loadingText").textContent=loadingTips[i];
-    },1500);
+    var i=0;$("loadingText").textContent=loadingTips[0];
+    tipTimer=setInterval(function(){i=(i+1)%loadingTips.length;$("loadingText").textContent=loadingTips[i]},1200);
   }
   function stopLoadingTips(){clearInterval(tipTimer)}
 
-  /* ---------- 打字机效果 ---------- */
+  /* ---------- 打字机 ---------- */
   function typeWriter(text,el,done){
-    el.textContent="";
-    var i=0;
-    var cursor=document.createElement("span");
-    cursor.className="cursor";
-    el.appendChild(cursor);
-    var speed=24;
+    el.textContent="";var i=0;
+    var cursor=document.createElement("span");cursor.className="cursor";el.appendChild(cursor);
     function step(){
       if(i<text.length){
-        var ch=text.charAt(i);
-        // 在换行处稍作停顿
-        var delay=(ch==="\n")?180:speed;
-        cursor.insertAdjacentText("beforebegin",ch);
-        i++;
-        setTimeout(step,delay);
-      }else{
-        setTimeout(function(){cursor.remove();done&&done()},300);
-      }
+        var ch=text.charAt(i);cursor.insertAdjacentText("beforebegin",ch);i++;
+        setTimeout(step,ch==="\n"?160:22);
+      }else{setTimeout(function(){cursor.remove();done&&done()},300)}
     }
     step();
   }
 
-  /* ---------- Agnes API 调用 ---------- */
-  var SYSTEM_PROMPT=
-    "你是一个极具幽默感和无厘头风格的喜剧编剧。"+
-    "根据用户输入的【想要的食物】和【选择的剧本风格】,写一段极度狗血、戏剧性拉满、转折离奇的短文。"+
-    "短文的结尾必须硬核转折到:【所以,请微信打赏我 50 元,或请我吃XX,帮我重回巅峰、度过此劫!】"+
-    "字数控制在 150 字左右,要有强烈的反差感和搞笑效果。";
-
-  function callAgnes(want,script,onOk,onErr){
-    var key=getKey();
-    if(!key){onErr("NO_KEY");return}
-    var base=getBase().replace(/\/+$/,"");
-    var userMsg="想要的食物/东西:"+want+"\n剧本风格:"+script+"\n\n请按系统提示词要求生成戏精讨饭文案。只输出文案正文,不要加引号或标题。";
-    var body={
-      model:getModel(),
-      messages:[
-        {role:"system",content:SYSTEM_PROMPT},
-        {role:"user",content:userMsg}
-      ],
-      temperature:1.1,
-      max_tokens:400,
-      stream:false
+  /* ---------- API: 文案生成 ---------- */
+  function buildSystemPrompt(style){
+    var base="你是一个极具幽默感和无厘头风格的喜剧编剧。"+
+      "根据用户输入的【想要的东西】和【选择的剧本风格】,写一段极度狗血、戏剧性拉满、转折离奇的短文。"+
+      "短文的结尾必须硬核转折到:【所以,请微信打赏我 50 元,或请我吃XX,帮我重回巅峰、度过此劫!】"+
+      "字数控制在 150 字左右,要有强烈的反差感和搞笑效果。";
+    var styleHints={
+      "无厘头":"用无厘头、跳脱、脑洞大开的喜剧风格,多用荒诞桥段和意外转折。",
+      "毒舌":"用毒舌、犀利、一针见血的吐槽风格,但不要真的生气。",
+      "冷幽默":"用冷面、面无表情式的冷幽默,一本正经地胡说八道。",
+      "沙雕":"用最沙雕、最智障、最离谱的中二台词和脑洞,越神经病越好笑。",
+      "煽情":"用先抑后扬的煽情风格,先营造悲惨处境,最后反转讨饭,要让人感动又好笑。"
     };
-    // 超时控制:30 秒后中断,走统一"大脑超载"提示,避免页面崩溃
-    var controller=new AbortController();
-    var timer=setTimeout(function(){controller.abort()},30000);
-    try{
-      fetch(base+"/chat/completions",{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "Authorization":"Bearer "+key
-        },
-        body:JSON.stringify(body),
-        signal:controller.signal
-      }).then(function(res){
-        if(!res.ok){
-          return res.text().then(function(t){throw new Error("HTTP "+res.status+": "+t)});
-        }
-        return res.json();
-      }).then(function(data){
-        var text=(data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||"";
-        text=text.trim().replace(/^["'"""]+|["'"""]+$/g,"");
-        if(!text){onErr("EMPTY");return}
-        onOk(text);
-      }).catch(function(err){
-        var msg=err&&err.name==="AbortError"?"TIMEOUT":(err.message||String(err));
-        onErr(msg);
-      }).finally(function(){clearTimeout(timer)});
-    }catch(e){
-      clearTimeout(timer);
-      onErr(e.message||String(e));
-    }
+    return base+(styleHints[style]||styleHints["无厘头"]);
   }
 
-  /* ---------- 生成流程 ---------- */
+  function callTextAPI(want,script,style,onOk,onErr){
+    var key=getKey();if(!key){onErr("NO_KEY");return}
+    var base=getBase().replace(/\/+$/,"");
+    var sysPrompt=buildSystemPrompt(style);
+    var userMsg="想要的东西:"+want+"\n剧本风格:"+script+"\n说话风格:"+style+"\n\n请生成戏精讨饭文案。只输出正文,不要引号或标题。";
+    var body={model:getModel(),messages:[{role:"system",content:sysPrompt},{role:"user",content:userMsg}],temperature:1.15,max_tokens:400,stream:false};
+    var controller=new AbortController();
+    var timer=setTimeout(function(){controller.abort()},30000);
+    fetch(base+"/chat/completions",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},body:JSON.stringify(body),signal:controller.signal})
+      .then(function(res){if(!res.ok){return res.text().then(function(t){throw new Error("HTTP "+res.status)})}return res.json()})
+      .then(function(data){
+        var text=(data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||"";
+        text=text.trim().replace(/^["'"""]+|["'"""]+$/g,"");
+        if(!text){onErr("EMPTY");return}onOk(text);
+      })
+      .catch(function(err){var m=err&&err.name==="AbortError"?"TIMEOUT":(err.message||"ERR");onErr(m)})
+      .finally(function(){clearTimeout(timer)});
+  }
+
+  /* ---------- API: 图片生成 ---------- */
+  var STYLE_IMAGE_PROMPTS={
+    "豪门弃少":"A dramatic scene of a wealthy young man in a fancy mansion, wearing designer clothes, looking shocked and betrayed, golden lighting, cinematic, meme style",
+    "仙侠渡劫":"Chinese xianxia cultivation scene, a sword cultivator in white robes with glowing sword, surrounded by dark clouds and lightning, mystical atmosphere, dramatic, fantasy art",
+    "赛博朋克":"Cyberpunk neon city at night, a hacker with robotic arm, glowing blue and pink lights, rain, futuristic buildings, dramatic lighting, sci-fi",
+    "霸道总裁":"A domineering CEO in a sharp suit, office skyscraper background, dramatic lighting, romantic tension, meme style, black and gold",
+    "末日废土":"Post-apocalyptic wasteland, ruins, a lone survivor, dusty sky, destroyed buildings, dramatic, desolate, zombie apocalypse vibe",
+    "宫斗剧":"Ancient Chinese palace drama, empress in elaborate red and gold robes, scheming concubines, dramatic lighting, imperial court, meme style",
+    "校园青春":"High school classroom, a student sleeping at desk with teacher yelling, back-to-school vibe, anime style, dramatic meme",
+    "武侠江湖":"Chinese wuxia martial arts scene, a beggar monk fighting with a golden staff, bamboo forest, dramatic, ink painting style, action",
+    "直播翻车":"A livestreamer at a messy desk, camera flashing, dramatic facepalm moment, meme style, RGB lighting, internet culture",
+    "网红被网暴":"A shocked internet influencer in front of multiple phone screens, dramatic, meme style, neon lights, social media chaos",
+    "相亲修罗场":"Awkward blind date scene, three people at a dinner table, dramatic uncomfortable silence, meme style, restaurant setting",
+    "职场PUA":"Office scene, an angry boss pointing at a nervous employee, fluorescent lighting, dramatic, meme style, corporate office"
+  };
+
+  function callImageAPI(script,onOk,onErr){
+    var key=getKey();if(!key){onErr("NO_KEY");return}
+    var base=getBase().replace(/\/+$/,"");
+    var prompt=STYLE_IMAGE_PROMPTS[script]||"A dramatic meme-style illustration, colorful, funny, Chinese internet culture";
+    var body={model:"agnes-image-2.1-flash",prompt:prompt,size:"1024x576",n:1};
+    var controller=new AbortController();
+    var timer=setTimeout(function(){controller.abort()},45000);
+    fetch(base+"/images/generations",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},body:JSON.stringify(body),signal:controller.signal})
+      .then(function(res){if(!res.ok){return res.text().then(function(t){throw new Error("IMG_HTTP "+res.status)})}return res.json()})
+      .then(function(data){
+        var url="";
+        if(data&&data.data&&data.data[0]){url=data.data[0].url||data.data[0].b64_json||""}
+        if(!url){onErr("IMG_EMPTY");return}
+        onOk(url);
+      })
+      .catch(function(err){var m=err&&err.name==="AbortError"?"TIMEOUT":(err.message||"ERR");onErr(m)})
+      .finally(function(){clearTimeout(timer)});
+  }
+
+  /* ---------- 文案 + 图片 并行生成 ---------- */
   var genBtn=$("genBtn"),loading=$("loading"),result=$("result"),resultBody=$("resultBody");
   var currentText="";
 
   genBtn.onclick=function(){
     var want=$("wantInput").value.trim();
     if(!want){toast("总得说想吃啥吧老板 🥺");$("wantInput").focus();return}
+    if(!getKey()){toast("没检测到 Key,请打开 env.js 填好 AGNES_API_KEY 后刷新页面");return}
+
     var script=getSelectedScript();
-    if(!getKey()){
-      toast("没检测到 Key,请打开 env.js 填好 AGNES_API_KEY 后刷新页面");
-      return;
+    var style=getSelectedStyle();
+
+    genBtn.disabled=true;result.classList.remove("show");loading.classList.add("show");startLoadingTips();
+
+    // 重置图片区
+    var hero=$("resultHero");
+    hero.innerHTML='<div class="img-placeholder">🎨 正在生成搞怪配图...</div>';
+
+    var textDone=false,imgDone=false,textData="",imgData="";
+    var finished=false;
+
+    function checkAll(){
+      if(textDone&&imgDone&&!finished){
+        finished=true;stopLoadingTips();loading.classList.remove("show");genBtn.disabled=false;
+        currentText=textData;
+        result.classList.add("show");
+        // 更新印章
+        var stampText=($("stampInput").value||"V我50").trim();
+        var parts=stampText.length<=4?[stampText]:[stampText.slice(0,Math.ceil(stampText.length/2)),stampText.slice(Math.ceil(stampText.length/2))];
+        $("sealLine1").textContent=parts[0]||"V我50";
+        $("sealLine2").textContent=parts[1]||"官方认证";
+        $("sealNo").textContent="编号:V50-"+Math.floor(100000+Math.random()*900000);
+        $("resultStamp").textContent=style+" · "+script;
+        // 渲染图片
+        if(imgData){
+          hero.innerHTML="";
+          var img=document.createElement("img");img.src=imgData;img.alt=script;
+          img.onerror=function(){hero.innerHTML='<div class="img-placeholder">😅 配图加载失败</div>'};
+          hero.appendChild(img);
+        }
+        // 滚动 + 打字机
+        setTimeout(function(){result.scrollIntoView({behavior:"smooth",block:"start"});},60);
+        typeWriter(textData,resultBody,null);
+      }
     }
 
-    // UI 状态
-    genBtn.disabled=true;
-    result.classList.remove("show");
-    loading.classList.add("show");
-    startLoadingTips();
+    function onTextOK(t){textData=t;textDone=true;checkAll()}
+    function onImgOK(url){imgData=url;imgDone=true;checkAll()}
+    function onTextErr(e){
+      if(finished)return;textDone=true;imgDone=true;finished=true;
+      stopLoadingTips();loading.classList.remove("show");genBtn.disabled=false;
+      if(e==="NO_KEY"){toast("没检测到 Key");}
+      else if(e==="TIMEOUT"){toast("戏精大脑超载中,请稍后再试 ⏳")}
+      else{toast("戏精大脑超载中,请稍后再试 🤯")}
+    }
+    function onImgErr(e){
+      // 图片失败不影响文案,继续推进
+      imgDone=true;checkAll();
+    }
 
-    callAgnes(want,script,function(text){
-      stopLoadingTips();
-      loading.classList.remove("show");
-      genBtn.disabled=false;
-      currentText=text;
-      result.classList.add("show");
-      // 每次生成更新随机凭证编号
-      var no="V50-"+Math.floor(100000+Math.random()*900000);
-      $("sealNo").textContent="编号:"+no;
-      // 自动滚动到结果
-      setTimeout(function(){
-        result.scrollIntoView({behavior:"smooth",block:"start"});
-      },60);
-      // 打字机渲染
-      typeWriter(text,resultBody,null);
-    },function(err){
-      stopLoadingTips();
-      loading.classList.remove("show");
-      genBtn.disabled=false;
-      if(err==="NO_KEY"){
-        toast("没检测到 Key,请打开 env.js 填好 AGNES_API_KEY 后刷新页面");
-      }else if(err==="TIMEOUT"){
-        toast("戏精大脑超载中,请稍后再试 ⏳");
-      }else if(err==="EMPTY"){
-        toast("戏精大脑超载中,请稍后再试 🤯");
-      }else{
-        toast("戏精大脑超载中,请稍后再试 🤯");
-      }
-    });
+    callTextAPI(want,script,style,onTextOK,onTextErr);
+    callImageAPI(script,onImgOK,onImgErr);
   };
 
-  /* ---------- 一键复制 ---------- */
+  /* ---------- 复制 ---------- */
   $("copyBtn").onclick=function(){
     if(!currentText){toast("还没生成文案呢");return}
     var text="🎭 戏精讨饭大作\n"+currentText+"\n\n——官方讨饭凭证,立字为据 💰";
     function ok(){toast("已复制!快去朋友圈开演 📋")}
     function fail(){toast("复制失败,请手动选中复制")}
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(ok).catch(function(){
-        fallbackCopy(text)?ok():fail();
-      });
-    }else{
-      fallbackCopy(text)?ok():fail();
-    }
+      navigator.clipboard.writeText(text).then(ok).catch(function(){fallbackCopy(text)?ok():fail()});
+    }else{fallbackCopy(text)?ok():fail()}
   };
   function fallbackCopy(text){
-    try{
-      var ta=document.createElement("textarea");
-      ta.value=text;ta.style.position="fixed";ta.style.top="-9999px";
-      document.body.appendChild(ta);ta.select();
-      var ok=document.execCommand("copy");
-      document.body.removeChild(ta);
-      return ok;
-    }catch(e){return false}
+    try{var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.top="-9999px";document.body.appendChild(ta);ta.select();var ok=document.execCommand("copy");document.body.removeChild(ta);return ok}catch(e){return false}
   }
 
-  /* ---------- 保存搞怪卡片 ---------- */
+  /* ---------- 保存卡片 ---------- */
   $("saveBtn").onclick=function(){
     if(!currentText){toast("还没生成文案呢");return}
-    var card=$("resultCard");
-    toast("正在生成卡片...");
-    if(typeof html2canvas==="undefined"){
-      toast("卡片库未加载,检查网络后重试");
-      return;
-    }
-    // 二维码图片若加载失败,先用占位;html2canvas 需要图片同源或 CORS
-    html2canvas(card,{
-      backgroundColor:"#FFE600",
-      scale:window.devicePixelRatio>1?2:2,
-      useCORS:true,
-      logging:false
-    }).then(function(canvas){
-      var link=document.createElement("a");
-      link.download="戏精讨饭卡片_"+Date.now()+".png";
-      link.href=canvas.toDataURL("image/png");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      toast("卡片已保存,快发给冤大头 📸");
-    }).catch(function(e){
-      toast("保存失败:"+e.message);
-    });
+    toast("正在生成梗图...");
+    if(typeof html2canvas==="undefined"){toast("卡片库未加载");return}
+    html2canvas($("resultCard"),{backgroundColor:"#FFE600",scale:2,useCORS:true,logging:false}).then(function(canvas){
+      var link=document.createElement("a");link.download="戏精讨饭_"+Date.now()+".png";link.href=canvas.toDataURL("image/png");document.body.appendChild(link);link.click();document.body.removeChild(link);toast("梗图已保存 📸");
+    }).catch(function(e){toast("保存失败:"+e.message)});
   };
 
-  // 回车快捷生成
-  $("wantInput").addEventListener("keydown",function(e){
-    if(e.key==="Enter"){e.preventDefault();genBtn.click()}
-  });
+  // 回车快捷
+  $("wantInput").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();genBtn.click()}});
 })();
 </script>
 </body>
