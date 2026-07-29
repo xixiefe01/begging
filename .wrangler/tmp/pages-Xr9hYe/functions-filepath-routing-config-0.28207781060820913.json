@@ -1,0 +1,37 @@
+{
+  "routes": [
+    {
+      "routePath": "/v1",
+      "mountPath": "/v1",
+      "method": "OPTIONS",
+      "middleware": [
+        "v1/_middleware.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/health",
+      "mountPath": "/",
+      "method": "",
+      "module": [
+        "health.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/img-proxy",
+      "mountPath": "/",
+      "method": "",
+      "module": [
+        "img-proxy.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/v1",
+      "mountPath": "/v1",
+      "method": "",
+      "middleware": [
+        "v1/_middleware.js:onRequest"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}
