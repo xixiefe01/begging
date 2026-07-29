@@ -566,7 +566,19 @@
     }
 
     function onTextOK(t){textData=t;textDone=true;checkAll()}
-    function onImgOK(url){imgData=url;imgDone=true;checkAll()}
+    function onImgOK(url){
+      // 走代理的图片先 fetch 成 data URL,html2canvas 截图时不再发网络请求,彻底避免 CORS 中止
+      if(url.indexOf("/img-proxy?")>-1 || url.indexOf("data:")!==0){
+        fetch(url).then(function(r){return r.blob()}).then(function(blob){
+          var reader=new FileReader();
+          reader.onloadend=function(){imgData=reader.result;imgDone=true;checkAll()};
+          reader.onerror=function(){imgData=url;imgDone=true;checkAll()};
+          reader.readAsDataURL(blob);
+        }).catch(function(){imgData=url;imgDone=true;checkAll()});
+      }else{
+        imgData=url;imgDone=true;checkAll();
+      }
+    }
     function onTextErr(e){
       if(finished)return;textDone=true;imgDone=true;finished=true;
       stopLoadingTips();loading.classList.remove("show");genBtn.disabled=false;
