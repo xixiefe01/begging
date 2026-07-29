@@ -502,13 +502,17 @@
     var prompt=STYLE_IMAGE_PROMPTS[script]||"A dramatic meme-style illustration, colorful, funny, Chinese internet culture";
     var body={model:"agnes-image-2.1-flash",prompt:prompt,size:"1024x576",n:1};
     var controller=new AbortController();
-    var timer=setTimeout(function(){controller.abort()},45000);
+    var timer=setTimeout(function(){controller.abort()},120000);
     fetch(base+"/images/generations",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},body:JSON.stringify(body),signal:controller.signal})
       .then(function(res){if(!res.ok){return res.text().then(function(t){throw new Error("IMG_HTTP "+res.status)})}return res.json()})
       .then(function(data){
         var url="";
         if(data&&data.data&&data.data[0]){url=data.data[0].url||data.data[0].b64_json||""}
         if(!url){onErr("IMG_EMPTY");return}
+        // 外链图片走本地 /img-proxy 代理,避免 html2canvas 截图 CORS 污染
+        if(url.startsWith("http") && url.indexOf("agnes-ai.")>-1){
+          url="/img-proxy?url="+encodeURIComponent(url);
+        }
         onOk(url);
       })
       .catch(function(err){var m=err&&err.name==="AbortError"?"TIMEOUT":(err.message||"ERR");onErr(m)})
